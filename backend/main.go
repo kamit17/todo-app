@@ -24,13 +24,28 @@ func init() {
     db.AutoMigrate(&Todo{})
 }
 
+// Handle CORS
+func handleCORS(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Access-Control-Allow-Origin", "*") // Allow all origins
+    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS") // Allow specific methods
+    w.Header().Set("Access-Control-Allow-Headers", "Content-Type") // Allow specific headers
+
+    // Handle preflight requests
+    if r.Method == http.MethodOptions {
+        w.WriteHeader(http.StatusNoContent) // Respond with 204 No Content for preflight
+        return
+    }
+}
+
 func getTodos(w http.ResponseWriter, r *http.Request) {
+    handleCORS(w, r) // Call CORS handler
     var todos []Todo
     db.Find(&todos)
     json.NewEncoder(w).Encode(todos)
 }
 
 func createTodo(w http.ResponseWriter, r *http.Request) {
+    handleCORS(w, r) // Call CORS handler
     var todo Todo
     json.NewDecoder(r.Body).Decode(&todo)
     db.Create(&todo)
@@ -40,6 +55,7 @@ func createTodo(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     http.HandleFunc("/todos", func(w http.ResponseWriter, r *http.Request) {
+        handleCORS(w, r) // Call CORS handler for all requests
         switch r.Method {
         case http.MethodGet:
             getTodos(w, r)
