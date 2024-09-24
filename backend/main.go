@@ -54,6 +54,12 @@ func createTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+    // Handle root route to serve index.html
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "../frontend/index.html") // Serve the HTML file
+    })
+
+    // Handle /todos route
     http.HandleFunc("/todos", func(w http.ResponseWriter, r *http.Request) {
         handleCORS(w, r) // Call CORS handler for all requests
         switch r.Method {
