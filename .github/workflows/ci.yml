@@ -19,25 +19,24 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '1.18'  # Specify your Go version
+        go-version: '1.22'  # Update to match the version in your go.mod
 
     - name: Cache Go modules
       uses: actions/cache@v3
       with:
         path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}
+        key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}  # Correct path
         restore-keys: |
           ${{ runner.os }}-go-
 
     - name: Install dependencies
-      working-directory: backend  # Set the working directory to backend
+      working-directory: backend
       run: go mod tidy
 
     - name: Run tests
-      working-directory: backend  # Set the working directory to backend
+      working-directory: backend
       run: go test ./...  # Run tests in all packages
 
     - name: Build
-      working-directory: backend  # Set the working directory to backend
+      working-directory: backend
       run: go build -o todo-app .  # Build your application
-
