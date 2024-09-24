@@ -1,21 +1,32 @@
-name: CI
+name: Go CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: '1.18'
+        go-version: '1.18'  # Specify your Go version
+
     - name: Install dependencies
       run: go mod tidy
+
     - name: Run tests
-      run: |
-        # You can add tests here
-        echo "No tests implemented yet"
+      run: go test ./...  # Run tests in all packages
+
+    - name: Build
+      run: go build -o todo-app ./backend  # Build your application
 
