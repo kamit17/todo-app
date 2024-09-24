@@ -54,6 +54,9 @@ func createTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+    // Serve static files (CSS, JS)
+    http.Handle("/frontend/", http.StripPrefix("/frontend/", http.FileServer(http.Dir("../frontend/"))))
+
     // Handle root route to serve index.html
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         http.ServeFile(w, r, "../frontend/index.html") // Serve the HTML file
