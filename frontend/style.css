@@ -19,7 +19,22 @@ h1 {
     padding: 20px;
 }
 
-input[type="text"] {
+/* Login and Registration Forms */
+#loginFormContainer, #registerFormContainer {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
     width: calc(100% - 22px);
     padding: 10px;
     margin: 10px 0;
@@ -73,3 +88,16 @@ li:last-child {
     background-color: #c82333;
 }
 
+/* Style adjustments for better layout */
+#todoContainer {
+    display: none; /* Hide initially */
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#loginFormContainer, #registerFormContainer {
+    margin-bottom: 30px;
+}
